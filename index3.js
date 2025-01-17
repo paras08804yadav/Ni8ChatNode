@@ -52,7 +52,7 @@ app.use('/api/agencies', agencyRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 3000;
-const HOST = 'localhost';
+const HOST = '0.0.0.0';
 
 server.listen(PORT, HOST, () => {
   console.log(`Server running at http://${HOST}:${PORT}`);
