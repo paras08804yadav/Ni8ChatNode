@@ -8,14 +8,22 @@ const bodyParser = require('body-parser');
 const userRoutes = require('./routes/userRoutes');
 const hostRoutes = require('./routes/hostRoutes');
 const agencyRoutes = require('./routes/agencyRoutes');
-const http = require('http');
+const https = require('https');
+const fs = require('fs');
 const cors = require('cors');
 const { setupSocketsIo } = require('./socket1'); // Import socket setup function
 
 
 dotenv.config();
 const app = express();
-const server = http.createServer(app);
+
+// Read the SSL certificate and key
+const sslOptions = {
+  key: fs.readFileSync('/etc/letsencrypt/live/mail.hozomarketing.com/privkey.pem'),
+  cert: fs.readFileSync('/etc/letsencrypt/live/mail.hozomarketing.com/fullchain.pem'),
+};
+
+const server = https.createServer(sslOptions, app);
 
 const io = socketIo(server, {
   cors: {
