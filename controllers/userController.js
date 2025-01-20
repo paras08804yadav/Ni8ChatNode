@@ -25,12 +25,13 @@ const signup = async (req, res) => {
     // Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-
+    let profile_url = null;
     // Create the user
     user = new User({
       username,
       email,
       password: hashedPassword,
+      profile_url
     });
 
     await user.save();
@@ -148,7 +149,7 @@ const login = async (req, res) => {
         let user = await User.findOne({
             $or: [{ email: identifier }, { username: identifier }] 
         });
-
+        
         if (!user) {
             return res.status(400).json({ msg: 'Invalid credentials.' });
         }
