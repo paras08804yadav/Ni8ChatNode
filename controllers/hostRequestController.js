@@ -19,6 +19,11 @@ const requestPermission = async (req, res) => {
                 message: 'Agency not found with the given ID and name.',
             });
         }
+        
+        if (!agency.waitedHost) {
+            agency.waitedHost = [];
+        }
+        
 
         // Step 3: Validate the host by host_id
         const host = await Host.findOne({ _id: host_id });
