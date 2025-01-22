@@ -30,8 +30,9 @@ const requestPermission = async (req, res) => {
         }
 
         // Step 4: Check if the host is already in the agency's waitedHost list
-        const isHostAlreadyAdded = agency.waitedHost.some(waitedHost => waitedHost.host_id.toString() === host_id);
-        if (isHostAlreadyAdded) {
+        const isHostAlreadyAdded = Array.isArray(agency.waitedHost) &&
+        agency.waitedHost.some(waitedHost => waitedHost.host_id?.toString() === host_id);
+            if (isHostAlreadyAdded) {
             return res.status(400).json({
                 success: false,
                 message: 'Host has already applied and is in the waited list.',
