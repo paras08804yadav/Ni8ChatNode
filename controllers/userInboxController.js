@@ -124,7 +124,7 @@ const getUserMessages = async (req, res) => {
                         senderId: msg.senderId,
                         receiverId: msg.receiverId,
                         message: msg.text,
-                        timestamp: msg.timestamp, // Use this for sorting
+                        timestamp: msg.timestamp, 
                         oppositeHostDetails: {
                             hostname: oppositeHost.hostname,
                             profilePhoto: `${req.protocol}://${req.get('host')}/uploads/profile_photo/${oppositeHost._id}.jpg`,

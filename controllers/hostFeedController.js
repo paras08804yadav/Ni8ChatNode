@@ -3,7 +3,7 @@ const Host = require('../models/Host');
 const { calculateAge } = require('../utils/calculateAge');
 
 const getFeed = async (req, res) => {
-  const { host_id, page = 1, pageSize = 10 } = req.body; // page and pageSize for pagination
+  const { host_id } = req.body;
 
   try {
     const host = await Host.findById(host_id);
@@ -17,7 +17,7 @@ const getFeed = async (req, res) => {
 
     // Fetch all users without pagination first
     const allUsers = await User.find().select(`
-      _id full_name username gender Date_of_Birth LookingFor interest profile_url
+      _id username gender Date_of_Birth LookingFor interest profile_url
     `);
 
     // Filter preferred users
@@ -52,13 +52,8 @@ const getFeed = async (req, res) => {
       ...otherUsers
     ];
 
-    // Pagination logic
-    const startIndex = (page - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
-    const paginatedUsers = combinedUsers.slice(startIndex, endIndex);
-
     // Returning specific fields for the users
-    const relevantUsers = paginatedUsers.map(user => ({
+    const relevantUsers = combinedUsers.map(user => ({
       user_id: user._id,
       username: user.username,  
       gender: user.gender,
