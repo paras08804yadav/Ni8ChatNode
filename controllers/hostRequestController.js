@@ -13,13 +13,16 @@ const requestPermission = async (req, res) => {
     try {
         // Step 2: Validate the agency by checking both the agency_id and agencyname
         const agency = await Agency.findOne({ _id: agency_id, agencyname });
+        console.log(agency);
+        console.log(host_id);
+
         if (!agency) {
             return res.status(404).json({
                 success: false,
                 message: 'Agency not found with the given ID and name.',
             });
         }
-        
+
         if (!agency.waitedHost) {
             agency.waitedHost = [];
         }

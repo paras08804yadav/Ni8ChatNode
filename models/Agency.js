@@ -25,9 +25,11 @@ const agencySchema = new Schema({
         required: true,
         minlength: 6    
     },
+
     address: {
         type: String
     },
+
     status: {
         type: String,
         enum: ['active', 'suspended', 'inactive'],
@@ -37,7 +39,6 @@ const agencySchema = new Schema({
         {
             host_id: {
                 type: mongoose.Schema.Types.ObjectId, // Reference to the Host ID
-                ref: 'Host',
                 required: true
             }
         }
@@ -47,7 +48,6 @@ const agencySchema = new Schema({
         {
             host_id: {
                 type: mongoose.Schema.Types.ObjectId, 
-                ref: 'Host',
                 required: true
             }
         }
