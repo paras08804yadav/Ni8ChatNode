@@ -81,7 +81,7 @@ router.post('/forgetPassword',authenticateToken,forgetPassword);
 // Kyc
 // Example usage in a route
 router.post('/submitKyc', authenticateToken,handleKycUpload, submitKyc);
-router.post('/notification', fetchHostNotifications);
+router.post('/notification',authenticateToken, fetchHostNotifications);
 
 
 // Bank Account

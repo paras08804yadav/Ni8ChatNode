@@ -3,7 +3,7 @@ const Host = require('../models/Host');
 const { calculateAge } = require('../utils/calculateAge');
 
 const getFeed = async (req, res) => {
-  const { user_id, page = 1, limit = 10 } = req.body; // Default to page 1 and 10 hosts per page
+  const { user_id } = req.body; // Default to page 1 and 10 hosts per page
 
   try {
     const user = await User.findById(user_id);
@@ -19,7 +19,7 @@ const getFeed = async (req, res) => {
 
     // Find all hosts for filtering
     const allHosts = await Host.find().select(`
-      _id full_name hostname gender location country Date_of_Birth LookingFor 
+      _id hostname gender location country Date_of_Birth LookingFor 
       languages interest bio social_id profile_url rank 
       audio_rate video_rate chat_rate rating followers
     `);
@@ -46,10 +46,8 @@ const getFeed = async (req, res) => {
 
     // Apply pagination to preferredHosts
     const paginatedPreferredHosts = preferredHosts
-      .slice((page - 1) * limit, page * limit)
       .map(host => ({
         host_id: host._id,
-        full_name: host.full_name,
         hostname: host.hostname,
         gender: host.gender,
         location: host.location,
@@ -71,10 +69,8 @@ const getFeed = async (req, res) => {
 
     // Apply pagination to otherHosts
     const paginatedOtherHosts = otherHosts
-      .slice((page - 1) * limit, page * limit)
       .map(host => ({
         host_id: host._id,
-        full_name: host.full_name,
         hostname: host.hostname,
         gender: host.gender,
         location: host.location,
@@ -99,8 +95,6 @@ const getFeed = async (req, res) => {
       otherHosts: paginatedOtherHosts,
       totalPreferredHosts: preferredHosts.length,
       totalOtherHosts: otherHosts.length,
-      currentPage: page,
-      totalPages: Math.ceil(preferredHosts.length / limit),
     });
   } catch (err) {
     console.error(err);
