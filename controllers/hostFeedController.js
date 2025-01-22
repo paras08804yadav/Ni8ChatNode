@@ -13,7 +13,6 @@ const getFeed = async (req, res) => {
     }
 
     const { age_range, LookingFor, interest } = host;
-    let [minAge, maxAge] = age_range.split('-').map(Number);
     const hostInterests = interest.map(i => i.trim().toLowerCase());
 
     // Fetch all users without pagination first
@@ -29,7 +28,6 @@ const getFeed = async (req, res) => {
       const hasMatchingInterest = hostInterests.some(interest => userInterests.includes(interest));
 
       return (
-        (userAge >= minAge && userAge <= maxAge) ||
         (userGender === LookingFor) || 
         hasMatchingInterest
       );
@@ -43,7 +41,6 @@ const getFeed = async (req, res) => {
       const hasMatchingInterest = hostInterests.some(interest => userInterests.includes(interest));
 
       return !(
-        (userAge >= minAge && userAge <= maxAge) ||
         (userGender === LookingFor) || 
         hasMatchingInterest
       );
