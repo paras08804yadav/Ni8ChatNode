@@ -26,12 +26,14 @@ const signup = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
     let profile_url = null;
+    let coins = 0;
     // Create the user
     user = new User({
       username,
       email,
       password: hashedPassword,
-      profile_url
+      profile_url, 
+      coins
     });
 
     await user.save();
@@ -171,7 +173,8 @@ const login = async (req, res) => {
                 gender: user.gender,
                 Date_of_Birth: user.Date_of_Birth,
                 interest: user.interest,
-                profile_url: user.profile_url
+                profile_url: user.profile_url,
+                coins: user.coins,
             }, 
             token,
         });
