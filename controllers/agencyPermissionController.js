@@ -70,7 +70,7 @@ const decideHostRequest = async (req, res) => {
 
     try {
         // Step 1: Find the agency by agencyId
-        const agency = await Agency.findOne({ _id: agency_id });
+        const agency = await Agency.findOne(agency_id);
         if (!agency) {
             return res.status(404).json({
                 success: false,
@@ -79,7 +79,7 @@ const decideHostRequest = async (req, res) => {
         }
 
         // Step 2: Find the host by hostId
-        const host = await Host.findOne({ _id: host_id });
+        const host = await Host.findOne(host_id );
         if (!host) {
             return res.status(404).json({
                 success: false,
@@ -87,8 +87,12 @@ const decideHostRequest = async (req, res) => {
             });
         }
 
+
+        console.log("123456789");
         // Step 3: Check if the host is in the agency's waitedHost list
         const hostIndexInWaitedList = agency.waitedHost.findIndex(waitedHost => waitedHost.host_id.toString() === host_id);
+        console.log("123456789");
+
         if (hostIndexInWaitedList === -1) {
             return res.status(400).json({
                 success: false,
