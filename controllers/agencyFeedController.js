@@ -15,6 +15,7 @@ const getFeed = async (req, res) => {
         if (!agency) {
             return res.status(404).json({ message: 'Agency not found' });
         }
+        console.log(agency);
 
         // Step 2: Extract the host_list from the agency document
         const hostIds = agency.host_list.map(hostObj => hostObj.host_id);
