@@ -11,14 +11,14 @@ const getFeed = async (req, res) => {
 
     try {
         // Step 1: Find the agency by agency_id
-        const agency = await Agency.findById(agency_id);
+        const agency = await Agency.findById(agency_id).populate('host_list');
         if (!agency) {
             return res.status(404).json({ message: 'Agency not found' });
         }
         console.log(agency);
 
         // Step 2: Extract the host_list from the agency document
-        const hostIds = agency.host_list.map(hostObj => hostObj.host_id);
+        const hostIds = agency.host_list.map(hostId => mongoose.Types.ObjectId(hostId));
 
         if (hostIds.length === 0) {
             return res.status(404).json({ message: 'No hosts found in this agency\'s host_list' });

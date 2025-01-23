@@ -37,20 +37,16 @@ const agencySchema = new Schema({
     },
     waitedHost: [
         {
-            host_id: {
-                type: mongoose.Schema.Types.ObjectId, // Reference to the Host ID
-                required: true
-            }
-        }
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Host',
+        },
     ],
 
     host_list:  [
         {
-            host_id: {
-                type: mongoose.Schema.Types.ObjectId, 
-                required: true
-            }
-        }
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Host', // Optional, to use population later
+        },
     ],
 
     created_at: {
