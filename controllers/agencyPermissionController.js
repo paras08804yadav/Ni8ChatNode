@@ -13,7 +13,7 @@ const allRequest = async (req, res) => {
 
     try {
         // Step 1: Find the agency by agencyId
-        const agency = await Agency.findOne({ _id: agency_id });
+        const agency = await Agency.findById(agency_id);
         if (!agency) {
             return res.status(404).json({
                 success: false,
@@ -33,9 +33,9 @@ const allRequest = async (req, res) => {
 
         // Step 2: Fetch the host details (hostname) for each host_id in waitedHost
         const hostsWithDetails = await Promise.all(waitedHost.map(async (hostData) => {
-            const hostDetails = await Host.findById(hostData.host_id).select('hostname'); 
+            const hostDetails = await Host.findById(hostData._id).select('hostname'); 
             return {
-                host_id: hostData.host_id,
+                host_id: hostData._id,
                 status: hostData.status,
                 host_name: hostDetails ? hostDetails.hostname : 'Unknown' // Return hostname or 'Unknown' if not found
             };
