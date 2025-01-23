@@ -70,7 +70,7 @@ const decideHostRequest = async (req, res) => {
 
     try {
         // Step 1: Find the agency by agencyId
-        const agency = await Agency.findOne(agency_id);
+        const agency = await Agency.findById(agency_id);
         if (!agency) {
             return res.status(404).json({
                 success: false,
@@ -79,7 +79,7 @@ const decideHostRequest = async (req, res) => {
         }
 
         // Step 2: Find the host by hostId
-        const host = await Host.findOne(host_id );
+        const host = await Host.findById(host_id );
         if (!host) {
             return res.status(404).json({
                 success: false,
