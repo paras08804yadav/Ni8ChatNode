@@ -5,18 +5,16 @@ const Agency = require('../models/Agency');
 const getFeed = async (req, res) => {
     const { agency_id } = req.body;
 
-    // Validate input
     if (!agency_id) {
         return res.status(400).json({ message: 'Agency ID is required' });
     }
 
     try {
-        // Step 1: Find the agency by agency_id
         const agency = await Agency.findById(agency_id);
         if (!agency) {
             return res.status(404).json({ message: 'Agency not found' });
         }
-        
+        console.log(agency.host_list);        
         // Step 2: Extract the host_list from the agency document
         const hostIds = agency.host_list.map(hostId => {
             // Convert string IDs to ObjectId if necessary
