@@ -13,7 +13,7 @@ const unlinkAsync = promisify(fs.unlink);
 const storage = multer.memoryStorage(); // Store files in memory for processing
 const upload = multer({
     storage: storage,
-    limits: { fileSize: 10 * 1024 * 1024 }, // Limit: 10 MB
+    limits: { fileSize: 30 * 1024 * 1024 }, // Limit: 10 MB
     fileFilter: (req, file, cb) => {
         const allowedTypes = /jpeg|jpg|png|mp4|mov/;
         const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
