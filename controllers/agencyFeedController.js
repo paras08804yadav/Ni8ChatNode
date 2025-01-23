@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Host = require('../models/Host');
 const Agency = require('../models/Agency');
 
@@ -11,14 +12,16 @@ const getFeed = async (req, res) => {
 
     try {
         // Step 1: Find the agency by agency_id
-        const agency = await Agency.findById(agency_id).populate('host_list');
+        const agency = await Agency.findById(agency_id);
         if (!agency) {
             return res.status(404).json({ message: 'Agency not found' });
         }
-        console.log(agency);
-
+        
         // Step 2: Extract the host_list from the agency document
-        const hostIds = agency.host_list.map(hostId => mongoose.Types.ObjectId(hostId));
+        const hostIds = agency.host_list.map(hostId => {
+            // Convert string IDs to ObjectId if necessary
+            return mongoose.Types.ObjectId.isValid(hostId) ? mongoose.Types.ObjectId(hostId) : hostId;
+        });
 
         if (hostIds.length === 0) {
             return res.status(404).json({ message: 'No hosts found in this agency\'s host_list' });
@@ -34,12 +37,13 @@ const getFeed = async (req, res) => {
 
         // Step 5: Return the found hosts
         return res.status(200).json(
-          hosts.map(host => ({
-              host_id: host._id,
-              hostname: host.hostname,
-              profile_url: host.profile_url || null,  
-          })));
-        } catch (error) {
+            hosts.map(host => ({
+                host_id: host._id,
+                hostname: host.hostname,
+                profile_url: host.profile_url || null,
+            }))
+        );
+    } catch (error) {
         console.error('Error fetching hosts:', error);
         return res.status(500).json({ message: 'Internal server error' });
     }
