@@ -140,8 +140,8 @@ const getFeed = async (req, res) => {
       const hasMatchingInterest = userInterests.some(interest => hostInterests.includes(interest));
 
       return (
-        (hostAge >= minAge && hostAge <= maxAge) ||
         (hostGender === LookingFor) ||
+        (hostAge >= minAge && hostAge <= maxAge) ||
         hasMatchingInterest
       );
     });

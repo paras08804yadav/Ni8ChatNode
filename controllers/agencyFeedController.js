@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Host = require('../models/Host');
 const Agency = require('../models/Agency');
+const { calculateAge } = require('../utils/calculateAge');
+
 
 const getFeed = async (req, res) => {
     const { agency_id } = req.body;
@@ -39,7 +41,7 @@ const getFeed = async (req, res) => {
                 host_id: host._id,
                 hostname: host.hostname,
                 profile_url: host.profile_url || null,
-            }))
+                age: calculateAge(host.Date_of_Birth),}))
         );
     } catch (error) {
         console.error('Error fetching hosts:', error);
