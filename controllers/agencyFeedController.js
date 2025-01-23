@@ -18,7 +18,7 @@ const getFeed = async (req, res) => {
         // Step 2: Extract the host_list from the agency document
         const hostIds = agency.host_list.map(hostId => {
             // Convert string IDs to ObjectId if necessary
-            return mongoose.Types.ObjectId.isValid(hostId) ? mongoose.Types.ObjectId(hostId) : hostId;
+            return mongoose.Types.ObjectId.isValid(hostId) ? new mongoose.Types.ObjectId(hostId) : hostId;
         });
 
         if (hostIds.length === 0) {
