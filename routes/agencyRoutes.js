@@ -5,6 +5,7 @@ const { getHostDetails, fetchUserImages, fetchUserVideos} = require('../controll
 const { getFeed } = require('../controllers/agencyFeedController');
 const { decideHostRequest, allRequest } = require('../controllers/agencyPermissionController');
 const { submitKyc, handleKycUpload} = require('../controllers/agencyKycController');
+const {getAgencyDashboard} = require('../controllers/agencyDashboardController');
 const { searchhosts } = require('../controllers/agencyHostSearchController');
 
 const router = express.Router();
@@ -23,6 +24,8 @@ router.post('/permission',authenticateToken, decideHostRequest)
 
 
 router.post('/submitKyc', handleKycUpload, submitKyc);
+
+router.post('/dashboard', getAgencyDashboard);
 
 //get host details.
 router.post('/getHostDetails',  getHostDetails)
