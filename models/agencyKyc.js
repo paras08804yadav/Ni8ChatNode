@@ -5,6 +5,10 @@ const agencyKycSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    agency_code:{
+        type: String,
+        required: true
+    },
     address: {
         type: String,
         required: true

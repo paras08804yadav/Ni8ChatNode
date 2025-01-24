@@ -65,11 +65,11 @@ const upload = multer({
 
 
 const submitKyc = async (req, res) => {
-    const { agency_id, full_name, address, phone_number, alternate_num, id_type } = req.body;
+    const { agency_id, full_name, address, phone_number, alternate_num, id_type, agency_code } = req.body;
 
     // Validate all required fields are present
-    if (!agency_id || !full_name || !address || !phone_number || !id_type) {
-        return res.status(400).json({ msg: 'All fields are required.' });
+    if (!agency_id || !full_name || !address || !phone_number || !id_type || !agency_code) {
+        return res.status(400).json({ msg: 'Missing :agency_id || full_name || address || phone_number || id_type || agency_code' });
     }
 
     // Validate that files for front and back ID proof are uploaded
