@@ -92,11 +92,11 @@ const submitKyc = async (req, res) => {
         // Save KYC form data to the database with relative paths
         const newKyc = new agencyKyc({
             agency_id,
-            full_name,
             address,
             phone_number,
             alternate_num,
             id_type,
+            agency_code,
             front_id_proof: `uploads/Kyc/front_id/${frontIdProofFileName}`, // Relative path for front ID proof
             back_id_proof: `uploads/Kyc/back_id/${backIdProofFileName}`,   // Relative path for back ID proof
         });
