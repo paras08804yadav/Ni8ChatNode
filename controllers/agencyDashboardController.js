@@ -16,30 +16,30 @@ const getAgencyDashboard = async (req, res) => {
     let todayEarnings = 0;
 
 
-    for (const host of agency.host_list) {
-        const hostId = host._id;
+    // for (const host of agency.host_list) {
+    //     const hostId = host._id;
   
-        // Fetch today's earnings for the host
-        const todayEarningResponse = await getTodaysEarnings({
-          body: { host_id: hostId },
-        });
-        if (!todayEarningResponse.error) {
-          todayEarnings += todayEarningResponse.todayEarnings || 0;
-        }
+    //     // Fetch today's earnings for the host
+    //     const todayEarningResponse = await getTodaysEarnings({
+    //       body: { host_id: hostId },
+    //     });
+    //     if (!todayEarningResponse.error) {
+    //       todayEarnings += todayEarningResponse.todayEarnings || 0;
+    //     }
   
-        // Fetch total earnings for the host
-        const totalEarningResponse = await getTotalEarnings({
-          body: { host_id: hostId },
-        });
-        if (!totalEarningResponse.error) {
-          totalEarnings += totalEarningResponse.totalEarnings || 0;
-        }
-    }
+    //     // Fetch total earnings for the host
+    //     const totalEarningResponse = await getTotalEarnings({
+    //       body: { host_id: hostId },
+    //     });
+    //     if (!totalEarningResponse.error) {
+    //       totalEarnings += totalEarningResponse.totalEarnings || 0;
+    //     }
+    // }
     // Return the dashboard details with a 200 status
     return res.status(200).json({
       agencyname: agency.agencyname,
-      todayEarnings, // Hardcoded for now
-      totalEarnings, // Hardcoded for now
+      todayEarning: 0, // Hardcoded for now
+      totalEarning: 0, // Hardcoded for now
       hostList: agency.host_list, // Host list from the agency document
     });
   } catch (error) {
