@@ -47,7 +47,7 @@ router.get('/search', authenticateToken, searchHosts);
 
 router.post('/filter', authenticateToken, filterHosts );
 
-//get user details.
+//get host details.
 router.post('/getHostDetails',  getHostDetails)
 router.post('/hostImage', authenticateToken, fetchUserImages)
 router.post('/hostVideo', authenticateToken, fetchUserVideos)
