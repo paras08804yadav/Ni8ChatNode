@@ -92,6 +92,7 @@ const submitKyc = async (req, res) => {
         // Save KYC form data to the database with relative paths
         const newKyc = new agencyKyc({
             agency_id,
+            full_name,
             address,
             phone_number,
             alternate_num,
