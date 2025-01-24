@@ -41,7 +41,7 @@ const getFeed = async (req, res) => {
                 host_id: host._id,
                 interest: host.interest, 
                 hostname: host.hostname,
-                profile_url: `${req.protocol}://${req.get('host')}/host.profile_url`,
+                profile_url: `${req.protocol}://${req.get('host')}/${host.profile_url}`,
                 age: calculateAge(host.Date_of_Birth),}))
         );
     } catch (error) {
