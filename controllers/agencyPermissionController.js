@@ -88,8 +88,14 @@ const decideHostRequest = async (req, res) => {
         }
 
         // Step 3: Check if the host request exists in the agency's waitedHost list
-        const hostIndexInWaitedList = agency.waitedHost && agency.waitedHost.length > 0 ? agency.waitedHost.findIndex(waitedHost => waitedHost.host_id && waitedHost.host_id === host_id) : -1;
-
+        const hostIndexInWaitedList =
+        agency.waitedHost && agency.waitedHost.length > 0
+          ? agency.waitedHost.findIndex(waitedHost => 
+              waitedHost.host_id && 
+              waitedHost.host_id.toString() === host_id.toString() // Ensure both are strings for comparison
+            )
+          : -1;
+      
 
         if (hostIndexInWaitedList === -1) {
             return res.status(400).json({
