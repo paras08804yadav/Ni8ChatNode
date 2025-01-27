@@ -27,13 +27,13 @@ const getAgencyDashboard = async (req, res) => {
           continue;
         }
 
-        todayEarnings += await getTodaysEarningsUtil(hostId);
-        totalEarnings += await getTotalEarningsUtil(hostId);
+        const todayEarning = await getTodaysEarningsUtil(hostId);
+        const totalEarning = await getTotalEarningsUtil(hostId);
 
         hostInfo.push({
           hostname: host.hostname,
-          todayEarnings,
-          totalEarnings,
+          todayEarning,
+          totalEarning,
         });
       } catch (error) {
         console.error(`Error fetching earnings for host ${hostId}:`, error);
