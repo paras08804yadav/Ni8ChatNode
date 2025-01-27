@@ -98,7 +98,7 @@ const decideHostRequest = async (req, res) => {
             console.log("host_id:", host_id);
             
             // Check if the host_id matches the value in the waitedHost array
-            return waitedHost === host_id // Ensure both are strings for comparison
+            return waitedHost.toString() === host_id // Ensure both are strings for comparison
         })
         : -1;
 
