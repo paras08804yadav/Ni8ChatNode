@@ -121,14 +121,16 @@ const decideHostRequest = async (req, res) => {
             }
 
             // Update host's agency_id and requestStatus
-            host.agency_id = agency_id;
+            host.agency_id = agency_id.toString();
             host.requestStatus = 'Allowed';
-
+            console.log(Done1);
             // Add the host_id as an object to the host_list
-            agency.host_list.push({host_id });  // Push as an object with `host_id` key
+            agency.host_list.push(host._id);  // Push as an object with `host_id` key
+            console.log(Done2);
 
             // Remove host from agency's waitedHost list
             agency.waitedHost.splice(hostIndexInWaitedList, 1);
+            console.log(Done3);
 
         } else if (decision === 'deny') {
             host.requestStatus = 'Rejected';
@@ -139,7 +141,11 @@ const decideHostRequest = async (req, res) => {
 
         // Step 5: Save the changes to both the Host and Agency documents
         await host.save();
+        console.log(Done4);
+
         await agency.save();
+        console.log(Done5);
+
 
         // Return success response based on the decision
         return res.status(200).json({
