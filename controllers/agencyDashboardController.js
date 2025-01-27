@@ -27,12 +27,9 @@ const getAgencyDashboard = async (req, res) => {
           continue;
         }
 
-        let todayEarning = 0;
-        let totalEarning = 0;
+        const todayEarning = await getTodaysEarningsUtil(hostId);
+        const totalEarning = await getTotalEarningsUtil(hostId);
 
-
-        todayEarning = await getTodaysEarningsUtil(hostId);
-        totalEarning = await getTotalEarningsUtil(hostId);
         totalEarnings += totalEarning;
         todayEarnings += todayEarning;  
 
