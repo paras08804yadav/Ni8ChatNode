@@ -21,28 +21,20 @@ const getAgencyDashboard = async (req, res) => {
     for (const hostId of agency.host_list) {
       try {
         const host = await Host.findById(hostId); 
-        console.log(`Fetching earnings for host ${host}`);
+
         if (!host) {
           console.error(`Host not found for ID: ${hostId}`);
           continue;
         }
 
-        const todayEarning = await getTodaysEarningsUtil(hostId);
-        const totalEarning = await getTotalEarningsUtil(hostId);
-
-        console.log(`Earnings for host ${hostId}: today=${todayEarning}, total=${totalEarning}`);
-
-        totalEarnings += totalEarning;
-        todayEarnings += todayEarning;  
-
-        console.log(`Total earnings for agency ${agency_id}: today=${todayEarnings}, total=${totalEarnings}`);
+        todayEarnings += await getTodaysEarningsUtil(hostId);
+        totalEarnings += await getTotalEarningsUtil(hostId);
 
         hostInfo.push({
           hostname: host.hostname,
-          todayEarning,
-          totalEarning,
+          todayEarnings,
+          totalEarnings,
         });
-        console.log(`Host info: ${hostInfo}`);
       } catch (error) {
         console.error(`Error fetching earnings for host ${hostId}:`, error);
       }
