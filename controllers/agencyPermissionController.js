@@ -97,16 +97,12 @@ const decideHostRequest = async (req, res) => {
             console.log("waitedHost:", waitedHost);
             
             // Check if the host_id matches the value in the waitedHost array
-            return waitedHost.toString() === host_id.toString(); // Ensure both are strings for comparison
+            return waitedHost === host_id // Ensure both are strings for comparison
         })
         : -1;
 
     console.log(hostIndexInWaitedList);
 
-
-    console.log(hostIndexInWaitedList);
-
-        console.log(hostIndexInWaitedList);
 
         if (hostIndexInWaitedList === -1) {
             return res.status(400).json({
@@ -129,7 +125,7 @@ const decideHostRequest = async (req, res) => {
             host.requestStatus = 'Allowed';
 
             // Add the host_id as an object to the host_list
-            agency.host_list.push({ host_id: host._id });  // Push as an object with `host_id` key
+            agency.host_list.push({host_id });  // Push as an object with `host_id` key
 
             // Remove host from agency's waitedHost list
             agency.waitedHost.splice(hostIndexInWaitedList, 1);
