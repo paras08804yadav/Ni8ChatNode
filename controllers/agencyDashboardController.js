@@ -1,56 +1,41 @@
-const Agency = require('../models/Agency'); // Update the path to your Agency model
-const {getTodaysEarnings, getTotalEarnings} = require('./hostDashboardController');
+const Agency = require("../models/Agency");
+const { getTodaysEarningsUtil, getTotalEarningsUtil } = require("./hostDashboardController");
 
 const getAgencyDashboard = async (req, res) => {
   try {
-    const { agency_id } = req.body; // Extract agency_id from the request body
+    const { agency_id } = req.body;
 
-    // Find the agency by ID
     const agency = await Agency.findById(agency_id);
 
-    // If no agency is found, return a 404 status with an error message
     if (!agency) {
-      return res.status(404).json({ error: 'Agency not found' });
+      return res.status(404).json({ error: "Agency not found" });
     }
+
     let totalEarnings = 0;
     let todayEarnings = 0;
 
-
-    for (const host of agency.host_list) {
-        const hostId = host._id;
-  
-        // Fetch today's earnings for the host
-        const todayEarningResponse = await getTodaysEarnings({
-          body: { host_id: hostId },
-        });
-        if (!todayEarningResponse.error) {
-          todayEarnings += todayEarningResponse.todayEarnings || 0;
-        }
-  
-        // Fetch total earnings for the host
-        const totalEarningResponse = await getTotalEarnings({
-          body: { host_id: hostId },
-        });
-        if (!totalEarningResponse.error) {
-          totalEarnings += totalEarningResponse.totalEarnings || 0;
-        }
+    for (const hostId of agency.host_list) {
+      try {
+        // Fetch earnings for each host
+        todayEarnings += await getTodaysEarningsUtil(hostId);
+        totalEarnings += await getTotalEarningsUtil(hostId);
+      } catch (error) {
+        console.error(`Error fetching earnings for host ${hostId}:`, error);
+      }
     }
-    // Return the dashboard details with a 200 status
+
     return res.status(200).json({
       agencyname: agency.agencyname,
-      todayEarning: todayEarningResponse, // Hardcoded for now
-      totalEarning: totalEarningResponse, // Hardcoded for now
-      hostList: agency.host_list, // Host list from the agency document
+      todayEarning: todayEarnings,
+      totalEarning: totalEarnings,
+      hostList: agency.host_list,
     });
   } catch (error) {
-    console.error('Error fetching agency dashboard:', error);
-
-    // Return a 500 status with a general error message
-    return res.status(500).json({ error: 'An error occurred while fetching the dashboard details' });
+    console.error("Error fetching agency dashboard:", error);
+    return res
+      .status(500)
+      .json({ error: "An error occurred while fetching the dashboard details" });
   }
 };
 
-module.exports =
-{ 
-    getAgencyDashboard 
-};
+module.exports = { getAgencyDashboard };
