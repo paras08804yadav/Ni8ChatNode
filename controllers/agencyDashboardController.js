@@ -1,5 +1,7 @@
 const Agency = require("../models/Agency");
-const { getTodaysEarningsUtil, getTotalEarningsUtil } = require("./hostDashboardController");
+const Host = require("../models/Host");
+
+const { getTodaysEarningsUtil, getTotalEarningsUtil } = require("../utils/earningsHost");
 
 const getAgencyDashboard = async (req, res) => {
   try {
@@ -13,12 +15,26 @@ const getAgencyDashboard = async (req, res) => {
 
     let totalEarnings = 0;
     let todayEarnings = 0;
+    const hostInfo = [];
+
 
     for (const hostId of agency.host_list) {
       try {
-        // Fetch earnings for each host
+        const host = await Host.findById(hostId); 
+
+        if (!host) {
+          console.error(`Host not found for ID: ${hostId}`);
+          continue;
+        }
+
         todayEarnings += await getTodaysEarningsUtil(hostId);
         totalEarnings += await getTotalEarningsUtil(hostId);
+
+        hostInfo.push({
+          hostname: host.hostname,
+          todayEarnings,
+          totalEarnings,
+        });
       } catch (error) {
         console.error(`Error fetching earnings for host ${hostId}:`, error);
       }
@@ -28,7 +44,7 @@ const getAgencyDashboard = async (req, res) => {
       agencyname: agency.agencyname,
       todayEarning: todayEarnings,
       totalEarning: totalEarnings,
-      hostList: agency.host_list,
+      hostInfo,
     });
   } catch (error) {
     console.error("Error fetching agency dashboard:", error);
