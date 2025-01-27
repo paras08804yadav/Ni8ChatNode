@@ -71,6 +71,7 @@ const decideHostRequest = async (req, res) => {
     try {
         // Step 1: Find the agency by agencyId
         const agency = await Agency.findById(agency_id);
+        console.log(agency);
         if (!agency) {
             return res.status(404).json({
                 success: false,
@@ -80,6 +81,7 @@ const decideHostRequest = async (req, res) => {
 
         // Step 2: Find the host by hostId
         const host = await Host.findById(host_id );
+        console.log(host);
         if (!host) {
             return res.status(404).json({
                 success: false,
@@ -95,7 +97,7 @@ const decideHostRequest = async (req, res) => {
               waitedHost.host_id.toString() === host_id.toString() // Ensure both are strings for comparison
             )
           : -1;
-      
+        console.log(hostIndexInWaitedList);
 
         if (hostIndexInWaitedList === -1) {
             return res.status(400).json({
