@@ -95,6 +95,7 @@ const decideHostRequest = async (req, res) => {
         ? agency.waitedHost.findIndex(waitedHost => {
             // Print the value of waitedHost to see its content
             console.log("waitedHost:", waitedHost);
+            console.log("host_id:", host_id);
             
             // Check if the host_id matches the value in the waitedHost array
             return waitedHost === host_id // Ensure both are strings for comparison
