@@ -2,62 +2,6 @@ const Agency = require('../models/Agency');
 const Host = require('../models/Host');
 
 
-
-// const allRequest = async (req, res) => {
-//     const { agency_id } = req.body;
-
-//     // Validate the input
-//     if (!agency_id) {
-//         return res.status(400).json({ msg: 'Please provide agency_id' });
-//     }
-
-//     try {
-//         // Step 1: Find the agency by agencyId
-//         const agency = await Agency.findById(agency_id);
-//         if (!agency) {
-//             return res.status(404).json({
-//                 success: false,
-//                 message: 'Agency not found with the given ID.',
-//             });
-//         }
-
-//         const { waitedHost } = agency;
-
-//         if (!waitedHost || waitedHost.length === 0) {
-//             return res.status(200).json({
-//                 success: true,
-//                 message: 'No hosts are currently pending approval.',
-//                 waitedHost: [],
-//             });
-//         }
-
-//         // Step 2: Fetch the host details (hostname) for each host_id in waitedHost
-//         const hostsWithDetails = await Promise.all(waitedHost.map(async (hostData) => {
-//             const hostDetails = await Host.findById(hostData._id).select('hostname'); 
-//             return {
-//                 host_id: hostData._id,
-//                 status: hostData.status,
-//                 host_name: hostDetails ? hostDetails.hostname : 'Unknown' // Return hostname or 'Unknown' if not found
-//             };
-//         }));
-
-//         // Step 3: Return the waitedHost data with host usernames
-//         return res.status(200).json({
-//             success: true,
-//             message: 'List of hosts waiting for approval retrieved successfully',
-//             waitedHost: hostsWithDetails,
-//         });
-
-//     } catch (err) {
-//         console.error('Error fetching agency data:', err);
-//         return res.status(500).json({
-//             success: false,
-//             message: 'Error processing the request.',
-//         });
-//     }
-// };
-
-
 const allRequest = async (req, res) => {
     const { agency_id } = req.body;
 

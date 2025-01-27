@@ -1,5 +1,6 @@
 const Host = require('../models/Host');
 const Agency = require('../models/Agency');
+const mongoose = require('mongoose');
 
 const searchhosts = async (req, res) => {
     const { agency_id, hostname } = req.body;
@@ -21,20 +22,18 @@ const searchhosts = async (req, res) => {
         }
 
         // Step 2: Extract the host_list from the agency document
-        const hostIds = agency.host_list.map(hostObj => hostObj.host_id);
+        const hostIds = agency.host_list.map(hostObj => mongoose.Types.ObjectId(hostObj.host_id));
 
         if (hostIds.length === 0) {
             return res.status(404).json({ msg: 'No hosts found in the agency\'s host_list' });
         }
 
-        // Step 3: Search for hosts by name within the agency's host_list
-        // Perform case-insensitive and partial matching with regex
+
         const hosts = await Host.find({
-            _id: { $in: hostIds },  // Search only within the host IDs in the agency's host_list
-            hostname: { $regex: hostname, $options: 'i' }  // Use regex for case-insensitive, partial matching
+            _id: { $in: hostIds },  
+            hostname: { $regex: hostname, $options: 'i' }  
         });
 
-        // Step 4: Check if any hosts were found
         if (hosts.length === 0) {
             return res.status(404).json({ msg: 'No hosts found with the provided hostname' });
         }
@@ -44,11 +43,10 @@ const searchhosts = async (req, res) => {
             hosts.map(host => ({
                 host_id: host._id,
                 hostname: host.hostname,
-                profile_url: host.profile_url || null,  // Return profile_url or null if it doesn't exist
+                profile_url: host.profile_url || null, 
             })));
 
     } catch (error) {
-        // Catch and handle any errors that occur
         return res.status(500).json({ msg: 'Server error', error: error.message });
     }
 };
