@@ -20,7 +20,7 @@ const searchhosts = async (req, res) => {
             return res.status(404).json({ msg: 'Agency not found with the provided ID' });
         }
 
-        const hostIds = agency.host_list.map(hostObj => hostObj.host_id);
+        const hostIds = agency.host_list || [];
         console.log(`Host IDs in agency's host_list: ${hostIds}`);
 
         if (hostIds.length === 0) {
