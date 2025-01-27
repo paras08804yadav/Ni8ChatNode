@@ -13,8 +13,8 @@ const getAgencyDashboard = async (req, res) => {
       return res.status(404).json({ error: "Agency not found" });
     }
 
-    let totalEarnings = 25;
-    let todayEarnings = 25;
+    let totalEarnings = 0;
+    let todayEarnings = 0;
     const hostInfo = [];
 
 
@@ -30,6 +30,8 @@ const getAgencyDashboard = async (req, res) => {
         const todayEarning = await getTodaysEarningsUtil(hostId);
         const totalEarning = await getTotalEarningsUtil(hostId);
 
+        totalEarnings += totalEarning;
+        todayEarnings += todayEarning;
         hostInfo.push({
           hostname: host.hostname,
           todayEarning,
