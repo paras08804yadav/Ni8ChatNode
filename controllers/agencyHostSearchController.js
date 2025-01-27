@@ -1,6 +1,5 @@
 const Host = require('../models/Host');
 const Agency = require('../models/Agency');
-const mongoose = require('mongoose');
 
 const searchhosts = async (req, res) => {
     const { agency_id, hostname } = req.body;
@@ -21,9 +20,8 @@ const searchhosts = async (req, res) => {
             return res.status(404).json({ msg: 'Agency not found with the provided ID' });
         }
 
-        // Step 2: Extract the host_list from the agency document
-        const hostIds = agency.host_list.map(hostObj => new mongoose.Types.ObjectId(hostObj.host_id));
-        console.log(hostIds);
+        const hostIds = agency.host_list.map(hostObj => hostObj.host_id);
+        console.log(`Host IDs in agency's host_list: ${hostIds}`);
 
         if (hostIds.length === 0) {
             return res.status(404).json({ msg: 'No hosts found in the agency\'s host_list' });
