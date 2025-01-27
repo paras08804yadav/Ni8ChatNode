@@ -38,14 +38,14 @@ const agencySchema = new Schema({
     },
     waitedHost: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: String,
             ref: 'Host',
         },
     ],
 
     host_list:  [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: String,
             ref: 'Host', // Optional, to use population later
         },
     ],
