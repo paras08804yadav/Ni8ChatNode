@@ -23,6 +23,7 @@ const searchhosts = async (req, res) => {
 
         // Step 2: Extract the host_list from the agency document
         const hostIds = agency.host_list.map(hostObj => new mongoose.Types.ObjectId(hostObj.host_id));
+        console.log(hostIds);
 
         if (hostIds.length === 0) {
             return res.status(404).json({ msg: 'No hosts found in the agency\'s host_list' });
