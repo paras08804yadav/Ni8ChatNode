@@ -89,14 +89,20 @@ const decideHostRequest = async (req, res) => {
             });
         }
 
-        // Step 3: Check if the host request exists in the agency's waitedHost list
-        const hostIndexInWaitedList =
+    // Step 3: Check if the host request exists in the agency's waitedHost list
+    const hostIndexInWaitedList =
         agency.waitedHost && agency.waitedHost.length > 0
-          ? agency.waitedHost.findIndex(waitedHost => 
-              waitedHost.host_id && 
-              waitedHost.host_id.toString() === host_id.toString() // Ensure both are strings for comparison
-            )
-          : -1;
+        ? agency.waitedHost.findIndex(waitedHost => {
+        // Print each waitedHost.host_id to the console
+        console.log("waitedHost.host_id:", waitedHost.host_id);
+
+        return waitedHost.host_id && 
+            waitedHost.host_id.toString() === host_id.toString(); // Ensure both are strings for comparison
+        })
+        : -1;
+
+    console.log(hostIndexInWaitedList);
+
         console.log(hostIndexInWaitedList);
 
         if (hostIndexInWaitedList === -1) {
