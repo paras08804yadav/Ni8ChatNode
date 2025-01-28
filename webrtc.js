@@ -31,7 +31,7 @@ function setSocketsio(io) {
 
 
       socket.to(calleeId).emit("newCall", {
-        callerId: socket.user.callerId,
+      callerId: socket.user.callerId,
       sdpOffer: sdpOffer,
       callType: callType,
       calleeMainId: calleeMainId,
