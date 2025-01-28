@@ -7,7 +7,7 @@ admin.initializeApp({
 
 if (!admin.apps.length) {
   admin.initializeApp({
-      credential: admin.credential.applicationDefault(), // Ensure this is set up with appropriate credentials
+      credential: admin.credential.applicationDefault(),
   });
 }
 

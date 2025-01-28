@@ -11,8 +11,8 @@ const agencyRoutes = require('./routes/agencyRoutes');
 const https = require('https');
 const fs = require('fs');
 const cors = require('cors');
-const { setupSocketsIo } = require('./socket1'); // Import socket setup function
-
+const { setupSocketsIo } = require('./socket1'); 
+const {setSocketsio} = require('./webrtc');
 
 dotenv.config();
 const app = express();
@@ -37,6 +37,7 @@ const io = socketIo(server, {
 
 
 setupSocketsIo(io);
+setSocketsio(io);
 
 
 // Middleware

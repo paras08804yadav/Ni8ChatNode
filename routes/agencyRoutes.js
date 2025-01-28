@@ -1,11 +1,11 @@
 const express = require('express');
 const authenticateToken = require('../middlewares/authMiddleware3');
-const { signup, login} = require('../controllers/hostController');
-const { getHostDetails, fetchUserImages, fetchUserVideos} = require('../controllers/agencyHostProfileController');  
+const { signup, login } = require('../controllers/hostController');
+const { getHostDetails, fetchUserImages, fetchUserVideos } = require('../controllers/agencyHostProfileController');  
 const { getFeed } = require('../controllers/agencyFeedController');
 const { decideHostRequest, allRequest } = require('../controllers/agencyPermissionController');
-const { submitKyc, handleKycUpload} = require('../controllers/agencyKycController');
-const {getAgencyDashboard} = require('../controllers/agencyDashboardController');
+const { submitKyc, handleKycUpload } = require('../controllers/agencyKycController');
+const { getAgencyDashboard } = require('../controllers/agencyDashboardController');
 const { searchhosts } = require('../controllers/agencyHostSearchController');
 const { fetchAgencyNotifications } = require('../controllers/agencyNotificationController');
 
